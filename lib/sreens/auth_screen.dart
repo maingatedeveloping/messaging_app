@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../widgets/main/user_image_picker.dart';
 
 final _firebase = FirebaseAuth.instance;
@@ -25,6 +26,14 @@ class _AuthScreenState extends State<AuthScreen> {
   var _enteredUserName = '';
   File? _selectedImage;
 
+  void toastMessage() {
+    Fluttertoast.showToast(
+      msg: 'Please choose an image.',
+      backgroundColor: Theme.of(context).canvasColor,
+      textColor: Theme.of(context).colorScheme.surface,
+    );
+  }
+
   void makeVissible() {
     setState(() {
       makePasswordVissible = !makePasswordVissible;
@@ -34,8 +43,11 @@ class _AuthScreenState extends State<AuthScreen> {
   void submit() async {
     final validate = _formKey.currentState!.validate();
 
+    if (!_isLogIn && _selectedImage == null) {
+      toastMessage();
+    }
+
     if (!validate || !_isLogIn && _selectedImage == null) {
-      //show error message...
       return;
     }
     _formKey.currentState!.save();
