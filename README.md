@@ -3,11 +3,11 @@
 This chatting app provides suitable chatting experience across android platforms. With a simple interface and real-time messaging capabilities, users can connect with friends and family effortlessly. The application is still under development though but it includes essential features like message sending and receiving.
 
 ## Features
--User Account Creation 
--Messaging
--Profile Update
--Add Friend
--Dark and Light Mode
+#User Account Creation 
+#Messaging
+#Profile Update
+#Add Friend
+#Dark and Light Mode
 
 
 ## How to run
