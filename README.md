@@ -4,9 +4,13 @@ This chatting app provides suitable chatting experience across android platforms
 
 ## Features
 #User Account Creation 
+
 #Messaging
+
 #Profile Update
+
 #Add Friend
+
 #Dark and Light Mode
 
 
