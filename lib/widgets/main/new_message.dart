@@ -70,114 +70,61 @@ class _NewMessageState extends State<NewMessage> {
           left: 15,
           right: 1,
           bottom: 10,
-          //bottom: 15,
         ),
-        child: Row(
-          children: [
-            Expanded(
-              child: TextField(
-                style: const TextStyle(
-                  overflow: TextOverflow.visible,
-                ),
-                expands: true,
-                maxLines: null,
-                minLines: null,
-                cursorColor: Theme.of(context).canvasColor,
-                controller: _messageController,
-                textCapitalization: TextCapitalization.sentences,
-                autocorrect: true,
-                enableSuggestions: true,
-                decoration: InputDecoration(
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  labelText: 'Send a message...',
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.image,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
-                    borderRadius: BorderRadius.circular(12),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxHeight: 200,
+            //  minHeight: 70,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  /* style: const TextStyle(
+                      overflow: TextOverflow.visible,
+                    ), */
+                  expands: true,
+                  maxLines: null,
+                  minLines: null,
+                  cursorColor: Theme.of(context).canvasColor,
+                  controller: _messageController,
+                  textCapitalization: TextCapitalization.sentences,
+                  autocorrect: true,
+                  enableSuggestions: true,
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    labelText: 'Send a message...',
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                    prefixIcon: Icon(
+                      Icons.image,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                 ),
               ),
-            ),
-            IconButton(
-              onPressed: () {
-                _submitMessage();
-                updateTimestamp(widget.userId, true);
-              },
-              icon: Icon(
-                Icons.send,
-                color: Theme.of(context).canvasColor,
+              IconButton(
+                onPressed: () {
+                  _submitMessage();
+                  updateTimestamp(widget.userId, true);
+                },
+                icon: Icon(
+                  Icons.send,
+                  color: Theme.of(context).canvasColor,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
-
-/*   @override
-  Widget build(BuildContext context) {
-    final updateTimestamp =
-        Provider.of<UpdateUser>(context, listen: false).updateFriend;
-    return SizedBox(
-      height: 60,
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 15,
-          right: 1,
-          bottom: 15,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: TextField(
-                expands: true,
-                cursorColor: Theme.of(context).canvasColor,
-                controller: _messageController,
-                textCapitalization: TextCapitalization.sentences,
-                autocorrect: true,
-                enableSuggestions: true,
-                decoration: InputDecoration(
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  labelText: 'Send a message...',
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.image,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor),
-                      borderRadius: BorderRadius.circular(12),),
-                ),
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                _submitMessage();
-                updateTimestamp(widget.userId, true);
-              },
-              icon: Icon(
-                Icons.send,
-                color: Theme.of(context).canvasColor,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  } */
