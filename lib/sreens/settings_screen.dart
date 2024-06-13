@@ -156,7 +156,7 @@ class _UserAccountState extends State<UserAccount> {
                               FirebaseAuth.instance.signOut();
                             },
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(9.0),
                               child: Text(
                                 'Log Out',
                                 style: TextStyle(
