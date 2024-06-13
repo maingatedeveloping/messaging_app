@@ -12,14 +12,15 @@ This chatting app provides suitable chatting experience across android platforms
 
 ## How to run
 
-#Clone the repository from GitHub to your local machine using the command: git clone <repository_url>
+#Clone the repository from GitHub to your local machine using the command: git clone "https://github.com/maingatedeveloping/messaging_app.git".
 
-#Open your terminal and run this command to install dependencies:  flutter pub get
+#Open your terminal and run this command to install dependencies:  flutter pub get.
 
-#Once the dependencies are installed, choose a specific device you want to run the application on. You can view the available devices by running: flutter devices
+#Once the dependencies are installed, choose a specific device you want to run the application on. You can view the available devices by running: flutter devices.
 
-#Run the application by running the following command: flutter run
+#Run the application by running the following command: flutter .
 
+#Also, here is a link to the apk "https://drive.google.com/file/d/13gBMAlSUxfVLFpk3N-ImIm8JEndQImeE/view?usp=drive_link'.
 
 
 ## Usage
@@ -51,22 +52,3 @@ I hope this README has provided you with a clear understanding of my chatting ap
 
 
 
-
-
-
-
-
-<!-- A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference. -->
