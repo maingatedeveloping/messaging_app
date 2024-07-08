@@ -90,14 +90,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     //final bool largeScreen = MediaQuery.of(context).size.width > 690;
     final Color textColor = Theme.of(context).canvasColor;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: const Color.fromARGB(196, 18, 27, 34),
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.onSurface,
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           icon: const Icon(
             Icons.arrow_back,
+            color: Colors.white,
           ),
         ),
         title: Text(

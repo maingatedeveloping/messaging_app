@@ -19,17 +19,18 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.onSurface,
         automaticallyImplyLeading: false,
         leading: InkWell(
-            onTap: () {
-              return Navigator.of(context).pop();
-            },
-            child: const Icon(
-              Icons.arrow_back,
-            ),
+          onTap: () {
+            return Navigator.of(context).pop();
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
           ),
+        ),
         title: ListTile(
-          
           title: Text(
             widget.userName,
             style: TextStyle(

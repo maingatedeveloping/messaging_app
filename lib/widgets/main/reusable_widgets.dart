@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../profile/edit_profile_screen.dart';
-import '../profile/user_profile_detail_screen.dart';
+import '../profile/image_profile_detail_screen.dart';
 
 Widget stackPhoto(ctx, closeProfilePic, bool secondStack, String userImage,
     String username, String about) {

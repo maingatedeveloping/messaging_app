@@ -63,9 +63,7 @@ class _NewMessageState extends State<NewMessage> {
   Widget build(BuildContext context) {
     final updateTimestamp =
         Provider.of<UpdateUser>(context, listen: false).updateFriend;
-    return SizedBox(
-      height: 70,
-      child: Padding(
+    return Padding(
         padding: const EdgeInsets.only(
           left: 15,
           right: 1,
@@ -74,18 +72,16 @@ class _NewMessageState extends State<NewMessage> {
         child: ConstrainedBox(
           constraints: const BoxConstraints(
             maxHeight: 200,
-            //  minHeight: 70,
+            minHeight: 70,
           ),
           child: Row(
             children: [
               Expanded(
                 child: TextField(
-                  /* style: const TextStyle(
-                      overflow: TextOverflow.visible,
-                    ), */
-                  expands: true,
-                  maxLines: null,
-                  minLines: null,
+                
+                  style: const TextStyle(color: Colors.white,),
+                  maxLines: 5,
+                  minLines: 1,
                   cursorColor: Theme.of(context).canvasColor,
                   controller: _messageController,
                   textCapitalization: TextCapitalization.sentences,
@@ -94,11 +90,14 @@ class _NewMessageState extends State<NewMessage> {
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    labelText: 'Send a message...',
-                    labelStyle: TextStyle(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: Colors.red,),
+                        ),
+                    
+                    hintStyle: TextStyle(
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
+                    hintText: 'Send a message...',
                     prefixIcon: Icon(
                       Icons.image,
                       color: Theme.of(context).colorScheme.onPrimary,
@@ -124,7 +123,6 @@ class _NewMessageState extends State<NewMessage> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

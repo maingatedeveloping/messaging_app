@@ -14,6 +14,7 @@ ThemeData lightMode = ThemeData(
   canvasColor: Colors.black,
   //
   colorScheme: ColorScheme.light(
+    onSurface: const Color.fromARGB(225, 31, 44, 52),
     onPrimary: const Color.fromARGB(213, 0, 0, 0),
     surface: Colors.white,
     primary: const Color.fromARGB(255, 200, 199, 199),
@@ -31,8 +32,9 @@ ThemeData darkMode = ThemeData(
   canvasColor: Colors.white,
   //
   colorScheme: ColorScheme.dark(
+    onSurface: const Color.fromARGB(225, 31, 44, 52),
     onPrimary: const Color.fromARGB(255, 170, 166, 166),
-    surface: const Color.fromARGB(224, 0, 0, 0),
+    surface: const Color.fromARGB(196, 18, 27, 34),
     primary: Colors.grey[900]!,
     secondary: Colors.grey[800]!,
     tertiary: Colors.grey[300],

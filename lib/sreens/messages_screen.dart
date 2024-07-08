@@ -5,19 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:i_chat/widgets/main/chat_messages.dart';
 import 'package:i_chat/widgets/main/new_message.dart';
 
-class ChatScreen extends StatefulWidget {
+class MessagesScreen extends StatefulWidget {
   final String userId;
   final String userName;
   final String about;
   final String imageUrl;
-  const ChatScreen(this.userId, this.userName, this.imageUrl, this.about,
+  const MessagesScreen(this.userId, this.userName, this.imageUrl, this.about,
       {super.key});
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<MessagesScreen> createState() => _MessagesScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _MessagesScreenState extends State<MessagesScreen> {
   String docId = 'default';
   void getDocId() async {
     QuerySnapshot snapshot =

@@ -12,18 +12,20 @@ class UsersDetailScreens extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.onSurface,
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           icon: const Icon(
             Icons.arrow_back,
+            color: Colors.white,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Details',
           style: TextStyle(
-            color: Theme.of(context).canvasColor,
+            color: Colors.white,
           ),
         ),
       ),

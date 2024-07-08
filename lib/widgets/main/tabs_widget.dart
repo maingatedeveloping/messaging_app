@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:i_chat/sreens/chats_screen.dart';
 import 'package:i_chat/sreens/users_screen.dart';
 import 'package:i_chat/sreens/settings_screen.dart';
+import 'package:i_chat/widgets/main/app_bar_widgets.dart';
 
 import '../../sreens/search_delegate_screen.dart';
 
@@ -21,7 +22,7 @@ class _TabBarState extends State<TabsWidget> {
   void initState() {
     _pages = [
       {
-        'page': const FriendScreen(),
+        'page': const ChatsScreen(),
       },
       {
         'page': const UsersScreen(),
@@ -66,34 +67,17 @@ class _TabBarState extends State<TabsWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: const Text(
-          'mG-chat',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          _slectedPageIndex != 2
-              ? IconButton(
-                  onPressed: _slectedPageIndex == 0 ? funcA : funcB,
-                  icon: const Padding(
-                    padding: EdgeInsets.only(
-                      right: 10,
-                    ),
-                    child: Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              : const Text(''),
-        ],
-      ),
+      appBar: _slectedPageIndex == 2
+          ? AppBar(
+              elevation: 0,
+              backgroundColor: Theme.of(context).colorScheme.onSurface,
+              title: AppBarWidgets().titleB(),
+            )
+          : null,
       body: _pages[_slectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
           onTap: _selectPage,
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           unselectedItemColor: Theme.of(context).canvasColor,
           selectedItemColor: Theme.of(context).primaryColor,
           //type: BottomNavigationBarType.shifting,

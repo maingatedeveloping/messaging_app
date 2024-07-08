@@ -1,232 +1,101 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:i_chat/providers/update_user_provider.dart';
-import 'package:intl/intl.dart';
+import 'package:i_chat/widgets/main/app_bar_widgets.dart';
+import 'package:i_chat/widgets/main/chat_screen_content.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../widgets/main/reusable_widgets.dart';
-import 'messages_screen.dart';
+import '../providers/theme_providers.dart';
 
-class FriendScreen extends StatefulWidget {
-  const FriendScreen({Key? key}) : super(key: key);
+class ChatsScreen extends StatefulWidget {
+  const ChatsScreen({Key? key}) : super(key: key);
 
   @override
-  State<FriendScreen> createState() => _FriendScreenState();
+  State<ChatsScreen> createState() => _ChatsScreenState();
 }
 
-class _FriendScreenState extends State<FriendScreen> {
+class _ChatsScreenState extends State<ChatsScreen> {
   final currentUserId = FirebaseAuth.instance.currentUser!.uid;
-
-  late QuerySnapshot snapshot;
+  @override
+  void dispose() {
+    friendsNames.clear();
+    filteredFriendsNames.clear();
+    super.dispose();
+  }
 
   @override
   void initState() {
-    getSnapshot();
+    getValue();
+    getFriendsNames();
     super.initState();
+  }
+
+  void getValue() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final fetchedVal = prefs.getString('groupvalue');
+    if (fetchedVal != null) {
+      fetchedVal == 'light'
+          ? Provider.of<ThemeProvider>(context, listen: false).changeToLight()
+          : Provider.of<ThemeProvider>(context, listen: false).changeToDark();
+    }
   }
 
   bool initiated = false;
   String errorMessage = 'Loading chats...';
 
-  void getSnapshot() async {
-    QuerySnapshot getSnapshot =
-        await FirebaseFirestore.instance.collection('message').get();
-    setState(() {
-      snapshot = getSnapshot;
-      initiated = true;
-    });
-  }
-
+  List<String> friendsNames = [];
+  List<String> filteredFriendsNames = [];
+  bool showSearchBar = false;
+  final TextEditingController _searchController = TextEditingController();
+  final appBarWidgets = AppBarWidgets();
   @override
   Widget build(BuildContext context) {
-    final updateUser =
-        Provider.of<UpdateUser>(context, listen: false).updateFriend;
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: GestureDetector(
-        onTap: () {
-          if (showProfile == true) {
-            _closeProfilePic();
-          } else {
-            return;
-          }
-        },
-        child: Stack(children: [
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(currentUserId)
-                  .collection('friends')
-                  .orderBy(
-                    'createdAt',
-                    descending: true,
-                  )
-                  .snapshots(),
-              builder: (context, friendsSnapshot) {
-                if (friendsSnapshot.connectionState ==
-                    ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  );
-                }
-                if (friendsSnapshot.hasError) {
-                  return Center(
-                    child: Text(
-                      errorMessage,
-                      style: TextStyle(color: Theme.of(context).canvasColor),
-                    ),
-                  );
-                }
-                final loadedFriends = friendsSnapshot.data!.docs;
-                return !initiated
-                    ? Center(
-                        child: Text(
-                          errorMessage,
-                          style: TextStyle(
-                            color: Theme.of(context).canvasColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
-                    : loadedFriends.isEmpty
-                        ? Center(
-                            child: Text(
-                              'You have no friends.',
-                              style: TextStyle(
-                                color: Theme.of(context).canvasColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: loadedFriends.length,
-                            itemBuilder: (context, index) {
-                              final friendId = loadedFriends[index]['userId'];
-                              return StreamBuilder(
-                                stream: FirebaseFirestore.instance
-                                    .collection('message')
-                                    .doc(snapshot.docs
-                                        .firstWhere((doc) =>
-                                            doc.id.contains(currentUserId) &
-                                            doc.id.contains(friendId))
-                                        .id)
-                                    .snapshots(),
-                                builder: (context, messageSnapshot) {
-                                  if (messageSnapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Text('');
-                                  }
-                                  final lastMessage =
-                                      messageSnapshot.data?['last_message'];
-                                  final timestamp =
-                                      messageSnapshot.data?['createdAt'];
-                                  final DateTime dateTime = timestamp.toDate();
-                                  String formattedTime =
-                                      DateFormat('h:m a').format(dateTime);
-                                  String formattedDate =
-                                      DateFormat('d/MM/yy').format(dateTime);
-                                  DateTime now = DateTime.now();
-
-                                  return ListTile(
-                                    onTap: () {
-                                      if (showProfile == true) {
-                                        _closeProfilePic();
-                                      } else {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) => ChatScreen(
-                                              friendId,
-                                              loadedFriends[index]['username'],
-                                              loadedFriends[index]['imageUrl'],
-                                              loadedFriends[index]['about'],
-                                            ),
-                                          ),
-                                        );
-                                        updateUser(friendId, false);
-                                      }
-                                    },
-                                    leading: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          showProfile = !showProfile;
-                                          imageUrl =
-                                              loadedFriends[index]['imageUrl'];
-                                          username =
-                                              loadedFriends[index]['username'];
-                                        });
-                                      },
-                                      child: CircleAvatar(
-                                        backgroundColor:
-                                            Theme.of(context).primaryColor,
-                                        radius: 25,
-                                        backgroundImage:
-                                            CachedNetworkImageProvider(
-                                                loadedFriends[index]
-                                                    ['imageUrl']),
-                                      ),
-                                    ),
-                                    title: Text(
-                                      loadedFriends[index]['username'],
-                                      style: TextStyle(
-                                        color: Theme.of(context).canvasColor,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    subtitle: Text(
-                                      lastMessage.isNotEmpty
-                                          ? lastMessage
-                                          : 'No messages yet',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary,
-                                      ),
-                                    ),
-                                    trailing: lastMessage.isNotEmpty
-                                        ? Text(
-                                            timestamp != null
-                                                ? dateTime.year == now.year &&
-                                                        dateTime.month ==
-                                                            now.month &&
-                                                        dateTime.day ==
-                                                            now.day - 1
-                                                    ? 'Yesterday'
-                                                    : dateTime.year ==
-                                                                now.year &&
-                                                            dateTime.month ==
-                                                                now.month &&
-                                                            dateTime.day ==
-                                                                now.day
-                                                        ? formattedTime
-                                                        : formattedDate
-                                                : "",
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          )
-                                        : const Text(''),
-                                  );
-                                },
-                              );
-                            },
-                          );
-              },
+      appBar: AppBar(
+        centerTitle: showSearchBar ? true : false,
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.onSurface,
+        leading: showSearchBar
+            ? appBarWidgets.leading(() {
+                _searchController.clear();
+                setState(() {
+                  showSearchBar = false;
+                });
+              })
+            : null,
+        title: showSearchBar
+            ? appBarWidgets.titleA((_) {
+                onInteraction(_searchController.text);
+              }, _searchController)
+            : appBarWidgets.titleB(),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showSearchBar
+                  ? _searchController.clear()
+                  : setState(() {
+                      showSearchBar = true;
+                    });
+            },
+            icon: Padding(
+              padding: const EdgeInsets.only(
+                right: 10,
+              ),
+              child: Icon(
+                !showSearchBar
+                    ? Icons.search
+                    : _searchController.text.isEmpty
+                        ? null
+                        : Icons.close,
+                color: Colors.white,
+              ),
             ),
           ),
-          showProfile
-              ? stackPhoto(context, _closeProfilePic, secondStack, imageUrl,
-                  username, about)
-              : Container(),
-        ]),
+        ],
       ),
+      body: ChatScreenContent(filteredFriendsNames, _searchController),
     );
   }
 
@@ -237,9 +106,32 @@ class _FriendScreenState extends State<FriendScreen> {
 
   bool showProfile = false;
 
-  void _closeProfilePic() {
+  //<<<<<------------FUNCTIONS ZONE-------->>>
+
+  void getFriendsNames() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUserId)
+        .collection('friends')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      for (int i = 0; i < querySnapshot.docs.length; i++) {
+        setState(() {
+          friendsNames.add(querySnapshot.docs[i]['username']);
+        });
+      }
+    });
+  }
+
+  void onInteraction(String query) {
+    final List<String> filteredNames = [];
+    for (final name in friendsNames) {
+      if (name.toLowerCase().contains(query.toLowerCase())) {
+        filteredNames.add(name);
+      }
+    }
     setState(() {
-      showProfile = false;
+      filteredFriendsNames = filteredNames;
     });
   }
 }

@@ -28,15 +28,16 @@ class _ThemeSelectionDialogStateState extends State<ThemeSelectionDialogState> {
     await prefs.setString('groupvalue', value);
   }
 
-  void getValue() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final fetchedVale = prefs.getString('groupvalue');
-    if (fetchedVale != null) {
+   void getValue() async {
+    final SharedPreferences prefs = await SharedPreferences.
+    getInstance();
+    final fetchedVal = prefs.getString('groupvalue');
+    if (fetchedVal != null) {
       setState(() {
-        groupValue = fetchedVale;
+        groupValue = fetchedVal;
       });
     }
-  }
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -57,25 +58,35 @@ class _ThemeSelectionDialogStateState extends State<ThemeSelectionDialogState> {
         height: 160,
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Radio(
-                    activeColor: Colors.blue,
-                    value: 'light',
-                    groupValue: groupValue,
-                    onChanged: (selectedValue) {
-                      setState(() {
-                        groupValue = selectedValue!;
-                      });
-                      saveValue(selectedValue!);
-                    }),
-                Text(
-                  'Light',
-                  style: TextStyle(color: textColor),
-                ),
-              ],
+            buildRadioButton('light', 'Light'),
+            buildRadioButton('dark', 'Dark'),
+            /* InkWell(
+              onTap: () {
+                        setState(() {
+                          groupValue = 'light';
+                        });
+                        saveValue('light');
+                      },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Radio(
+                      activeColor: Colors.blue,
+                      value: 'light',
+                      groupValue: groupValue,
+                      onChanged: (selectedValue) {
+                        setState(() {
+                          groupValue = selectedValue!;
+                        });
+                        saveValue(selectedValue!);
+                      }),
+                  Text(
+                    'Light',
+                    style: TextStyle(color: textColor),
+                  ),
+                ],
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -96,7 +107,7 @@ class _ThemeSelectionDialogStateState extends State<ThemeSelectionDialogState> {
                   style: TextStyle(color: textColor),
                 )
               ],
-            ),
+            ), */
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -128,7 +139,7 @@ class _ThemeSelectionDialogStateState extends State<ThemeSelectionDialogState> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Ok',
+                      'OK',
                       style: TextStyle(
                         color: textColor,
                         fontWeight: FontWeight.bold,
@@ -142,5 +153,37 @@ class _ThemeSelectionDialogStateState extends State<ThemeSelectionDialogState> {
         ),
       ),
     );
+  }
+
+  Widget buildRadioButton(String value, String title) {
+    return InkWell(
+              onTap: () {
+                        setState(() {
+                          groupValue = value;
+                        });
+                        saveValue(value);
+                      },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Radio(
+                      activeColor: Colors.blue,
+                      value: value,
+                      groupValue: groupValue,
+                      onChanged: (selectedValue) {
+                        setState(() {
+                          groupValue = value;
+                        });
+                        saveValue(value);
+                      }),
+                      const SizedBox(width: 10,),
+                  Text(
+                    title,
+                    style: TextStyle(color: Theme.of(context).canvasColor,fontWeight: FontWeight.bold,),
+                  ),
+                ],
+         ),
+     );
   }
 }

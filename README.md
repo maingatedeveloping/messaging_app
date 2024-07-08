@@ -4,7 +4,7 @@ This chatting app provides suitable chatting experience across android platforms
 
 ## Features
 
-#User Account Creation 
+#User Account Creation
 
 #Messaging
 
@@ -14,19 +14,17 @@ This chatting app provides suitable chatting experience across android platforms
 
 #Dark and Light Mode
 
-
 ## How to run
 
 #Clone the repository from GitHub to your local machine using the command: git clone "https://github.com/maingatedeveloping/messaging_app.git".
 
-#Open your terminal and run this command to install dependencies:  flutter pub get.
+#Open your terminal and run this command to install dependencies: flutter pub get.
 
 #Once the dependencies are installed, choose a specific device you want to run the application on. You can view the available devices by running: flutter devices.
 
-#Run the application by running the following command: flutter .
+#Run the application by running the following command: flutter run.
 
 #Also, here is a link to the apk "https://drive.google.com/file/d/13gBMAlSUxfVLFpk3N-ImIm8JEndQImeE/view?usp=drive_link'.
-
 
 ## Usage
 
@@ -34,26 +32,10 @@ This chatting app provides suitable chatting experience across android platforms
 
 #To start messaging, you will need to tap on the Users tab to navigate to the Users screen and add a friend by taping on the Add Friend button trailing to the a user name.
 
-#After adding a friend, you can navigate to the chats screen and start messaging a particular friend. Each user listtile has a subtitle of last mesaage  and a trailing of the time last message was sent.
+#After adding a friend, you can navigate to the chats screen and start messaging a particular friend. Each user listtile has a subtitle of last mesaage and a trailing of the time last message was sent.
 
 #To update your profile you will need to navigate to the settings screen and tap on your user name. There you can change your profile picture, you user name and the about. Tap on the "Save" bottom at the right buttom corner to save the changes.
 
 #On the settings screen you can also switch the theme between Dark and Light mode by tapping on Theme, and selecting the theme you want. Tap on 'Ok' to confirm and save the changes.
 
 I hope this README has provided you with a clear understanding of my chatting app and how to use its features. Please note that the application is still under development, and we are continuously working to enhance its functionality and user experience.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
